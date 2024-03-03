@@ -1,0 +1,8 @@
+package peggame;
+
+public class PegGameException extends Exception {
+    String message = "invalid move";
+    public PegGameException(String message) {
+        super(message);
+    }
+}
