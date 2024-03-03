@@ -1,0 +1,46 @@
+package peggame;
+import java.util.Scanner;
+
+public class CommandLineInterface {
+     public static void playPegGame(PegGame pegGame) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Peg Game! Enter your commands:");
+        while (true) {
+            System.out.print("> ");
+            String input = scanner.nextLine().trim();
+            if (input.equals("quit")) {
+                System.out.println("Goodbye!");
+                break;
+            } else {
+                processCommand(input, pegGame);
+                if (pegGame.getGameState() == GameState.WON || pegGame.getGameState() == GameState.STALEMATE) {
+                    break;
+                }
+            }
+        }
+        scanner.close();
+    }
+    private static void processCommand(String input, PegGame pegGame) {
+        String[] value = input.split("\\s+");
+        if ("move".equals(value[0]) && value.length == 5) {
+            try {
+                int r1 = Integer.parseInt(value[1]);
+                int c1 = Integer.parseInt(value[2]);
+                int r2 = Integer.parseInt(value[3]);
+                int c2 = Integer.parseInt(value[4]);
+                Location from = new Location(r1, c1);
+                Location to = new Location(r2, c2);
+                Move move = new Move(from, to);
+                pegGame.makeMove(move);
+                System.out.println("Move successful.");
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException | PegGameException e) {
+                System.err.println("Invalid move: " + e.getMessage());
+            }
+        } else if ("quit".equals(value[0]) && value.length == 1) {
+            System.out.println("Goodbye!");
+            System.exit(0);
+        } else {
+            System.err.println("Invalid command. Please use the format 'move r1 c1 r2 c2' or 'quit'.");
+        }
+    }
+}
