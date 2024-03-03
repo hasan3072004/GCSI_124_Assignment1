@@ -1,0 +1,38 @@
+package peggame;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class PegGameFileReader {
+    public static PegGame readFromFile(String filename) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        int rows = Integer.parseInt(reader.readLine());
+        char[][] board = new char[rows][rows];
+        
+        for (int i = 0; i < rows; i++) {
+            String line = reader.readLine();
+            for (int j = 0; j < rows; j++) {
+                board[i][j] = line.charAt(j);
+            }
+        }
+        SquarePegGame pegGame = new SquarePegGame(rows, new char[rows*rows], GameState.NOT_STARTED);
+
+        pegGame.setBoard(board);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String trimmedLine = line.trim();
+            if ("NOT_STARTED".equals(trimmedLine)) {
+                pegGame.setGameState(GameState.NOT_STARTED);
+            } else if ("IN_PROGRESS".equals(trimmedLine)) {
+                pegGame.setGameState(GameState.IN_PROGRESS);
+            } else if ("STALEMATE".equals(trimmedLine)) {
+                pegGame.setGameState(GameState.STALEMATE);
+            } else if ("WON".equals(trimmedLine)) {
+                pegGame.setGameState(GameState.WON);
+            }
+        }
+        reader.close();
+        return pegGame;
+    }
+}
