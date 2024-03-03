@@ -1,0 +1,75 @@
+package peggame;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class SquarePegGame implements PegGame {
+    private int rows;
+    private char[][] board;
+    private GameState gameState;
+
+    public SquarePegGame(int rows, char[] board, GameState gameState) {
+        this.rows = rows;
+        this.board = new char[rows][rows];
+        this.gameState = gameState;
+    }
+    public void setBoard(char[][] board) {this.board = board;}
+    public int getRows() { return rows; }
+   @Override
+    public Collection<Move> getPossibleMoves() {
+        List<Move> possibleMoves = new ArrayList<>();
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < rows; col++) {
+                if (isValidLocation(row, col)) {
+                    if (isValidMove(new Location(row, col))) {
+                        possibleMoves.add(new Move(new Location(row, col), null));
+                    }
+                }
+            }
+        }
+        return possibleMoves;
+    }
+    private boolean isValidLocation(int row, int col) {return row >= 0 && row < rows && col >= 0 && col < rows;}
+    private boolean isValidMove(Location location) {return true; }
+    @Override
+    public GameState getGameState() {return gameState;}
+    @Override
+    public void makeMove(Move move) throws PegGameException {
+        Location to = move.getTo();
+        if (isValidMove(to)) {
+            placePeg(to); 
+            System.out.println(toString());
+        } else {
+            throw new PegGameException("Invalid move: " + move);
+        }
+    }
+    public void placePeg(Location location) {
+        if (isValidLocation(location.getRow(), location.getCol())) {
+            board[location.getRow()][location.getCol()] = '-';
+        } else {
+            System.err.println("Invalid location: " + location);
+        }
+    }
+    @Override
+    public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < rows; i++) {
+        if (i > 0) {
+            sb.append("\n");
+        }
+        for (int j = 0; j < rows; j++) {
+            if (board[i][j] == 0) {
+                sb.append('o'); 
+            } else {
+                sb.append(board[i][j]);
+            }
+        }
+    }
+    return sb.toString();
+    }
+    public void setGameState(GameState notStarted) {
+        throw new UnsupportedOperationException("Unimplemented method 'setGameState'");
+    }
+}
+
