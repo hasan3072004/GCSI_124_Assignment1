@@ -13,7 +13,11 @@ public class CommandLineInterface {
                 break;
             } else {
                 processCommand(input, pegGame);
-                if (pegGame.getGameState() == GameState.WON || pegGame.getGameState() == GameState.STALEMATE) {
+                if (pegGame.getGameState() == GameState.WON) {
+                    System.out.println("Congratulations! You have won the game!");
+                    break;
+                } else if (pegGame.getGameState() == GameState.STALEMATE) {
+                    System.out.println("The game ended in a stalemate.");
                     break;
                 }
             }
@@ -36,7 +40,7 @@ public class CommandLineInterface {
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | PegGameException e) {
                 System.err.println("Invalid move: " + e.getMessage());
             }
-        } else if ("quit".equals(value[0]) && value.length == 1) {
+        } else if ("quit".equals(value[0]) && value.length == 2) {
             System.out.println("Goodbye!");
             System.exit(0);
         } else {
