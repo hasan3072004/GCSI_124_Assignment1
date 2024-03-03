@@ -33,7 +33,25 @@ public class SquarePegGame implements PegGame {
     private boolean isValidLocation(int row, int col) {return row >= 0 && row < rows && col >= 0 && col < rows;}
     private boolean isValidMove(Location location) {return true; }
     @Override
-    public GameState getGameState() {return gameState;}
+    public GameState getGameState() {
+        int pegCount = 0;
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < rows; col++) {
+                if (isValidLocation(row, col) && board[row][col] == 'o') {
+                    pegCount++;
+                }
+            }
+        }
+        if (pegCount == 1) {
+            return GameState.WON; 
+        } else if (pegCount > 1) {
+            return GameState.IN_PROGRESS; 
+        } else {
+            
+            return GameState.STALEMATE; 
+        }
+    
+    }
     @Override
     public void makeMove(Move move) throws PegGameException {
         Location to = move.getTo();
