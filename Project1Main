@@ -1,0 +1,23 @@
+package peggame;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Project1Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter file Path: ");
+        String filename = scanner.nextLine().trim();
+        //String filename = "C:/Users/hasan/OneDrive/Desktop/peggame/pegGame.txt";
+        try {
+            PegGame pegGame = PegGameFileReader.readFromFile(filename);
+            System.out.println("Initial Board:");
+            System.out.println(pegGame.toString());
+            CommandLineInterface.playPegGame(pegGame);
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+        scanner.close();
+        
+    }
+}
