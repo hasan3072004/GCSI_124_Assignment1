@@ -1,0 +1,51 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MoveTest {
+
+    @Test
+    public void testConstructorAndGetters() {
+        Location from = new Location(2, 3);
+        Location to = new Location(4, 1);
+
+        Move move = new Move(from, to);
+
+        assertEquals(from, move.getFrom());
+        assertEquals(to, move.getTo());
+    }
+
+    @Test
+    public void testEquals() {
+        Location from1 = new Location(2, 3);
+        Location to1 = new Location(4, 1);
+
+        Location from2 = new Location(2, 3);
+        Location to2 = new Location(4, 1);
+
+        Location to3 = new Location(3, 2);
+
+        Move move1 = new Move(from1, to1);
+        Move move2 = new Move(from2, to2);
+        Move move3 = new Move(from1, to3);
+
+        // Test for equality
+        assertEquals(move1, move2);
+        assertNotEquals(move1, move3);
+
+        // Test for reflexivity
+        assertEquals(move1, move1);
+
+        // Test for symmetry
+        assertEquals(move2, move1);
+
+        // Test for transitivity
+        Move move4 = new Move(from2, to2);
+        assertEquals(move1, move2);
+        assertEquals(move2, move4);
+        assertEquals(move1, move4);
+
+        // Test with null and different class
+        assertNotEquals(move1, null);
+        assertNotEquals(move1, "Not a Move");
+    }
+}
