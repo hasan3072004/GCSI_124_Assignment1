@@ -1,0 +1,29 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
+import java.io.StringReader;
+
+public class PegGameFileReaderTest {
+
+    @Test
+    public void testReadFromFile() throws IOException {
+        String input = "3\nooo\no-o\nooo\nIN_PROGRESS";
+        PegGame pegGame = PegGameFileReader.readFromFile(new StringReader(input));
+
+        assertNotNull(pegGame);
+        assertTrue(pegGame instanceof SquarePegGame);
+
+        SquarePegGame squarePegGame = (SquarePegGame) pegGame;
+
+        assertEquals(3, squarePegGame.getRows());
+
+        char[][] expectedBoard = {
+                {'o', 'o', 'o'},
+                {'o', '-', 'o'},
+                {'o', 'o', 'o'}
+        };
+        assertArrayEquals(expectedBoard, squarePegGame.getBoard());
+
+        assertEquals(GameState.IN_PROGRESS, squarePegGame.getGameState());
+    }
+}
