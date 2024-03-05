@@ -1,0 +1,37 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.Collection;
+import java.util.Arrays;
+
+public class PegGameImplementationTest {
+
+    @Test
+    public void testGetPossibleMoves() {
+        PegGame pegGame = new PegGameImplementation();
+
+        Collection<Move> possibleMoves = pegGame.getPossibleMoves();
+
+        assertNotNull(possibleMoves);
+        assertTrue(possibleMoves.isEmpty()); // Adjust this based on the actual expected behavior
+    }
+
+    @Test
+    public void testGetGameState() {
+        PegGame pegGame = new PegGameImplementation();
+
+        GameState gameState = pegGame.getGameState();
+
+        assertNotNull(gameState);
+        assertEquals(GameState.IN_PROGRESS, gameState); // Adjust this based on the actual expected behavior
+    }
+
+    @Test
+    public void testMakeMove() {
+        PegGame pegGame = new PegGameImplementation();
+
+        Location from = new Location(2, 3);
+        Location to = new Location(4, 1);
+        Move move = new Move(from, to);
+
+        assertDoesNotThrow(() -> pegGame.makeMove(move));    }
+}
