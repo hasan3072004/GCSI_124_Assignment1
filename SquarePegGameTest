@@ -1,0 +1,25 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class SquarePegGameTest {
+
+    @Test
+    public void testToString() {
+        SquarePegGame squarePegGame = new SquarePegGame(3, new char[]{'o', 'o', 'o', 'o', '-', 'o', 'o', 'o', 'o'}, GameState.IN_PROGRESS);
+
+        String expectedString = "ooo\no-o\nooo";
+        assertEquals(expectedString, squarePegGame.toString());
+    }
+
+    @Test
+    public void testGetGameState() {
+        SquarePegGame squarePegGame = new SquarePegGame(3, new char[]{'o', 'o', 'o', 'o', '-', 'o', 'o', 'o', 'o'}, GameState.IN_PROGRESS);
+
+        assertEquals(GameState.IN_PROGRESS, squarePegGame.getGameState());
+
+        squarePegGame.placePeg(new Location(1, 1));
+        assertEquals(GameState.WON, squarePegGame.getGameState());
+        squarePegGame.setBoard(new char[]{'o', 'o', 'o', 'o', '-', 'o', '-', 'o', 'o'});
+        assertEquals(GameState.STALEMATE, squarePegGame.getGameState());
+    }
+}
