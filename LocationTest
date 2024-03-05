@@ -1,0 +1,45 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class LocationTest {
+
+    @Test
+    public void testConstructorAndGetters() {
+        Location location = new Location(2, 3);
+        assertEquals(2, location.getRow());
+        assertEquals(3, location.getCol());
+    }
+
+    @Test
+    public void testToString() {
+        Location location = new Location(4, 1);
+        assertEquals("(4, 1)", location.toString());
+    }
+
+    @Test
+    public void testEquals() {
+        Location location1 = new Location(2, 3);
+        Location location2 = new Location(2, 3);
+        Location location3 = new Location(4, 1);
+
+        // Test for equality
+        assertEquals(location1, location2);
+        assertNotEquals(location1, location3);
+
+        // Test for reflexivity
+        assertEquals(location1, location1);
+
+        // Test for symmetry
+        assertEquals(location2, location1);
+
+        // Test for transitivity
+        Location location4 = new Location(2, 3);
+        assertEquals(location1, location2);
+        assertEquals(location2, location4);
+        assertEquals(location1, location4);
+
+        // Test with null and different class
+        assertNotEquals(location1, null);
+        assertNotEquals(location1, "Not a Location");
+    }
+}
